@@ -6,6 +6,7 @@ import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -358,32 +359,36 @@ public class InfiniteScroll<T extends PagerAdapter, ISitem extends InfiniteScrol
             return infinitePosition % getRealCount();
         }
 
+        @NonNull
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
+        public Object instantiateItem(@NonNull ViewGroup container, int position) {
+            int realPosition = getRealPosition(position);
+            return pagerAdapter.instantiateItem(container, realPosition);
+        }
+
+        @NonNull
+        @SuppressWarnings("deprecation")
+        @Override
+        public Object instantiateItem(@NonNull View container, int position) {
             int realPosition = getRealPosition(position);
             return pagerAdapter.instantiateItem(container, realPosition);
         }
 
         @Override
-        public Object instantiateItem(View container, int position) {
+        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
             int realPosition = getRealPosition(position);
-            return pagerAdapter.instantiateItem(container, realPosition);
+            pagerAdapter.destroyItem(container, realPosition, object);
         }
 
+        @SuppressWarnings("deprecation")
         @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
+        public void destroyItem(@NonNull View container, int position, @NonNull Object object) {
             int realPosition = getRealPosition(position);
             pagerAdapter.destroyItem(container, realPosition, object);
         }
 
         @Override
-        public void destroyItem(View container, int position, Object object) {
-            int realPosition = getRealPosition(position);
-            pagerAdapter.destroyItem(container, realPosition, object);
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
+        public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
             return pagerAdapter.isViewFromObject(view, object);
         }
 
@@ -417,8 +422,9 @@ public class InfiniteScroll<T extends PagerAdapter, ISitem extends InfiniteScrol
             fragmentStatePagerAdapter.setPrimaryItem(container, getRealPosition(position), object);
         }
 
+        @SuppressWarnings("deprecation")
         @Override
-        public void setPrimaryItem(View container, int position, Object object) {
+        public void setPrimaryItem(@NonNull View container, int position, @NonNull Object object) {
             fragmentStatePagerAdapter.setPrimaryItem(container, getRealPosition(position), object);
         }
 
@@ -446,14 +452,17 @@ public class InfiniteScroll<T extends PagerAdapter, ISitem extends InfiniteScrol
             return infinitePosition % getRealCount();
         }
 
+        @NonNull
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             int realPosition = getRealPosition(position);
             return fragmentStatePagerAdapter.instantiateItem(container, realPosition);
         }
 
+        @NonNull
+        @SuppressWarnings("deprecation")
         @Override
-        public Object instantiateItem(View container, int position) {
+        public Object instantiateItem(@NonNull View container, int position) {
             int realPosition = getRealPosition(position);
             return fragmentStatePagerAdapter.instantiateItem(container, realPosition);
         }
@@ -475,8 +484,9 @@ public class InfiniteScroll<T extends PagerAdapter, ISitem extends InfiniteScrol
             return false;
         }
 
+        @SuppressWarnings("deprecation")
         @Override
-        public void destroyItem(View container, int position, Object object) {
+        public void destroyItem(@NonNull View container, int position, @NonNull Object object) {
             if (!shouldBeInstantiated(position))
                 fragmentStatePagerAdapter.destroyItem(container, getRealPosition(position), object);
         }
