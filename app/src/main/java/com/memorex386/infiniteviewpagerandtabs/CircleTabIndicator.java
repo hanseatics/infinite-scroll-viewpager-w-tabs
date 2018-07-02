@@ -30,7 +30,7 @@ public class CircleTabIndicator extends FrameLayout implements InfiniteScroll.Cu
 
     public void init() {
         inflate(getContext(), R.layout.view_circle_tab_indicator, this);
-        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout = findViewById(R.id.tab_layout);
     }
 
     public TabLayout getTabLayout() {
