@@ -124,7 +124,7 @@ public class InfiniteScroll<T extends PagerAdapter, ISitem extends InfiniteScrol
         return setTabLayout(tabLayout.getTabLayout(), false);
     }
 
-    private TabLayout.OnTabSelectedListener tabSelectedListener = new TabLayout.OnTabSelectedListener() {
+    private TabLayout.BaseOnTabSelectedListener tabSelectedListener = new TabLayout.OnTabSelectedListener() {
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
             int tabPosition = InfiniteScroll.this.tabLayout.getSelectedTabPosition();
